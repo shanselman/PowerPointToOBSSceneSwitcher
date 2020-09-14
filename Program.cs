@@ -21,10 +21,10 @@ namespace PowerPointToOBSSceneSwitcher
             await OBS.Connect();
             Console.WriteLine("connected");
 
+            OBS.GetScenes();
+
             Console.ReadLine();
         }
-
-        static string DefaultScene = string.Empty;
 
         async static void App_SlideShowNextSlide(SlideShowWindow Wn)
         {
@@ -46,20 +46,19 @@ namespace PowerPointToOBSSceneSwitcher
                     {
                         var sceneLine = line.Substring(4);
                         Console.WriteLine($"  Switching to OBS Scene named \"{sceneLine}\"");
-                        OBS.ChangeScene(sceneLine);
-                        sceneHandled = true;
+                        sceneHandled = OBS.ChangeScene(sceneLine);
                     }
 
                     if(line.StartsWith("OBSDEF:"))
                     {
-                        DefaultScene = line.Substring(7);
-                        Console.WriteLine($"  Setting the default OBS Scene to \"{DefaultScene}\"");
+                        OBS.DefaultScene = line.Substring(7);
+                        Console.WriteLine($"  Setting the default OBS Scene to \"{OBS.DefaultScene}\"");
                     }
 
                     if (!sceneHandled)
                     {
-                        OBS.ChangeScene(DefaultScene);
-                        Console.WriteLine($"  Switching to OBS Default Scene named \"{DefaultScene}\"");
+                        OBS.ChangeScene(OBS.DefaultScene);
+                        Console.WriteLine($"  Switching to OBS Default Scene named \"{OBS.DefaultScene}\"");
 
                     }
                 }

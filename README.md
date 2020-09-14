@@ -3,4 +3,6 @@ A .NET core based scene switcher than connects to OBS and changes scenes based n
 
 Note this won't build with "dotnet build," instead open a Visual Studio 2019 Developer Command Prompt and build with "msbuild"
 
+This video explains how it works!
+
 [![Watch the video](https://i.imgur.com/v369AtP.png)](https://www.youtube.com/watch?v=ciNcxi2bPwM)

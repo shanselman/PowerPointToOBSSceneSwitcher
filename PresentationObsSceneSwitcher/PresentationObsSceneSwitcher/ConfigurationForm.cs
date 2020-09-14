@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PresentationObsSceneSwitcher
 {
-    public partial class PresentationObsSceneSwitcher : Form
+    public partial class ConfigurationForm : Form
     {
-        public PresentationObsSceneSwitcher()
+        public ConfigurationForm()
         {
             InitializeComponent();
         }

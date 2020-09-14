@@ -1,7 +1,7 @@
 ﻿
 namespace PresentationObsSceneSwitcher
 {
-    partial class PresentationObsSceneSwitcher
+    partial class ConfigurationForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -32,6 +32,11 @@ namespace PresentationObsSceneSwitcher
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuItemClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -39,11 +44,16 @@ namespace PresentationObsSceneSwitcher
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Controls.Add(this.menuStrip);
+            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Location = new System.Drawing.Point(0, 25);
+            this.panel1.Margin = new System.Windows.Forms.Padding(10);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(515, 275);
+            this.panel1.Size = new System.Drawing.Size(324, 85);
             this.panel1.TabIndex = 0;
             // 
             // menuStrip
@@ -54,7 +64,7 @@ namespace PresentationObsSceneSwitcher
             this.menuItemClose});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(515, 25);
+            this.menuStrip.Size = new System.Drawing.Size(434, 25);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu Strip";
             // 
@@ -66,21 +76,74 @@ namespace PresentationObsSceneSwitcher
             this.menuItemClose.Text = "Close";
             this.menuItemClose.ToolTipText = "Closes the application";
             // 
-            // PresentationObsSceneSwitcher
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(9, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(152, 17);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "OBS Websocket Server:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(9, 40);
+            this.label2.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 17);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Ip Address:";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(88, 37);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(82, 25);
+            this.textBox1.TabIndex = 2;
+            this.textBox1.Text = "127.0.0.1";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(259, 37);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(5, 10, 0, 0);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(48, 25);
+            this.textBox2.TabIndex = 4;
+            this.textBox2.Text = "4444";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(180, 40);
+            this.label3.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(74, 17);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Ip Address:";
+            // 
+            // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(515, 275);
+            this.ClientSize = new System.Drawing.Size(324, 110);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.MainMenuStrip = this.menuStrip;
-            this.Name = "PresentationObsSceneSwitcher";
+            this.Name = "ConfigurationForm";
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -146,6 +209,11 @@ namespace PresentationObsSceneSwitcher
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem menuItemClose;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

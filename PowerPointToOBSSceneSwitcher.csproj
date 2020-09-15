@@ -4,6 +4,12 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="PresentationObsSceneSwitcher\**" />
+    <EmbeddedResource Remove="PresentationObsSceneSwitcher\**" />
+    <None Remove="PresentationObsSceneSwitcher\**" />
+  </ItemGroup>
   
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.PowerPoint">

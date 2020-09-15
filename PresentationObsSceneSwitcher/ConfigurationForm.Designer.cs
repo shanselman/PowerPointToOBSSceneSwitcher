@@ -30,16 +30,19 @@ namespace PresentationObsSceneSwitcher
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.tbPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tbIpAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -47,48 +50,64 @@ namespace PresentationObsSceneSwitcher
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.textBox2);
+            this.panel1.Controls.Add(this.tbPassword);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.buttonStart);
+            this.panel1.Controls.Add(this.tbPort);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.tbIpAddress);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Margin = new System.Windows.Forms.Padding(10);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(317, 112);
+            this.panel1.Size = new System.Drawing.Size(329, 150);
             this.panel1.TabIndex = 0;
             // 
-            // textBox2
+            // buttonStart
             // 
-            this.textBox2.Location = new System.Drawing.Point(259, 37);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(5, 10, 0, 0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(48, 25);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "4444";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.buttonStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
+            this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonStart.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonStart.Location = new System.Drawing.Point(9, 107);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(308, 30);
+            this.buttonStart.TabIndex = 5;
+            this.buttonStart.Text = "Start / Restart";
+            this.buttonStart.UseVisualStyleBackColor = false;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            // 
+            // tbPort
+            // 
+            this.tbPort.Location = new System.Drawing.Point(269, 37);
+            this.tbPort.Margin = new System.Windows.Forms.Padding(5, 10, 0, 0);
+            this.tbPort.Name = "tbPort";
+            this.tbPort.Size = new System.Drawing.Size(48, 25);
+            this.tbPort.TabIndex = 4;
+            this.tbPort.Text = "4444";
+            this.tbPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(180, 40);
+            this.label3.Location = new System.Drawing.Point(185, 40);
             this.label3.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 17);
+            this.label3.Size = new System.Drawing.Size(79, 17);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Ip Address:";
+            this.label3.Text = "Ip Address*:";
             // 
-            // textBox1
+            // tbIpAddress
             // 
-            this.textBox1.Location = new System.Drawing.Point(88, 37);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(82, 25);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "127.0.0.1";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbIpAddress.Location = new System.Drawing.Point(93, 37);
+            this.tbIpAddress.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
+            this.tbIpAddress.Name = "tbIpAddress";
+            this.tbIpAddress.Size = new System.Drawing.Size(82, 25);
+            this.tbIpAddress.TabIndex = 2;
+            this.tbIpAddress.Text = "127.0.0.1";
+            this.tbIpAddress.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 
@@ -96,9 +115,9 @@ namespace PresentationObsSceneSwitcher
             this.label2.Location = new System.Drawing.Point(9, 40);
             this.label2.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 17);
+            this.label2.Size = new System.Drawing.Size(79, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Ip Address:";
+            this.label2.Text = "Ip Address*:";
             // 
             // label1
             // 
@@ -119,7 +138,7 @@ namespace PresentationObsSceneSwitcher
             this.menuItemClose});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(324, 25);
+            this.menuStrip.Size = new System.Drawing.Size(329, 25);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "Menu Strip";
             // 
@@ -137,34 +156,42 @@ namespace PresentationObsSceneSwitcher
             this.notifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.notifyIcon.BalloonTipText = "Hidden!";
             this.notifyIcon.BalloonTipTitle = "Presentation Obs Scene Switcher";
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
             this.notifyIcon.Text = "notifyIcon";
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
             // 
-            // button1
+            // tbPassword
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(85)))), ((int)(((byte)(85)))), ((int)(((byte)(85)))));
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.button1.Location = new System.Drawing.Point(9, 72);
-            this.button1.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(298, 30);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Start / Restart";
-            this.button1.UseVisualStyleBackColor = false;
+            this.tbPassword.Location = new System.Drawing.Point(93, 72);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(224, 25);
+            this.tbPassword.TabIndex = 7;
+            this.tbPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 75);
+            this.label4.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 17);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Password:";
             // 
             // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 137);
+            this.ClientSize = new System.Drawing.Size(329, 175);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip;
             this.Name = "ConfigurationForm";
-            this.Text = "Form1";
+            this.Text = "ConfigurationForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfigurationForm_FormClosing);
             this.Resize += new System.EventHandler(this.ConfigurationForm_Resize);
             this.panel1.ResumeLayout(false);
@@ -240,11 +267,13 @@ namespace PresentationObsSceneSwitcher
         private System.Windows.Forms.ToolStripMenuItem menuItemClose;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbIpAddress;
+        private System.Windows.Forms.TextBox tbPort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.TextBox tbPassword;
+        private System.Windows.Forms.Label label4;
     }
 }
 

@@ -33,10 +33,18 @@ namespace PowerPointToOBSSceneSwitcher
                 var note = String.Empty;
                 try { note = Wn.View.Slide.NotesPage.Shapes[2].TextFrame.TextRange.Text; }
                 catch { /*no notes*/ }
-                if (note.StartsWith("OBS:")) {
-                    note = new StringReader(note).ReadLine().Substring(4);
-                    Console.WriteLine($"  Switching to OBS Scene named \"{note}\"");
-                    OBS.ChangeScene(note);
+
+                var notereader = new StringReader(note);
+                string line;
+                while ((line = notereader.ReadLine()) != null)
+                {
+                    if (line.StartsWith("OBS:")) {
+                        line = line.Substring(4).Trim();
+                        Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
+                        try { OBS.ChangeScene(line); }
+                        catch { Console.WriteLine($"  FAILED! Is there such a scene?"); }
+                        break;
+                    }
                 }
             }
         }

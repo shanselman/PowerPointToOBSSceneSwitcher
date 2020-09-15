@@ -28,6 +28,11 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         /// Port of the OBS WebSocket server
         /// </summary>
         public int Port { get; set; }
+
+        /// <summary>
+        /// Optional Password of the OBS WebSocket server
+        /// </summary>
+        public string Password { get; set; }
     }
 
     /// <summary>
@@ -57,7 +62,7 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         public void Connect()
         {
             if (!obsWebSocket.IsConnected)
-                obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", "");
+                obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", settings.Password ?? "");
         }
 
         /// <summary>

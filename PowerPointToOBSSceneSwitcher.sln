@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30428.66
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerPointToOBSSceneSwitcher", "PowerPointToOBSSceneSwitcher.csproj", "{8A844363-5A92-403B-90CD-BFCB30ED5054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationObsSceneSwitcher", "PresentationObsSceneSwitcher\PresentationObsSceneSwitcher\PresentationObsSceneSwitcher.csproj", "{5B07EF15-11D6-4646-8322-965BD7D4ADEE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationObsSceneSwitcher", "PresentationObsSceneSwitcher\PresentationObsSceneSwitcher.csproj", "{5B07EF15-11D6-4646-8322-965BD7D4ADEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

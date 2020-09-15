@@ -57,7 +57,7 @@ namespace PresentationObsSceneSwitcher
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Margin = new System.Windows.Forms.Padding(10);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(324, 112);
+            this.panel1.Size = new System.Drawing.Size(317, 112);
             this.panel1.TabIndex = 0;
             // 
             // textBox2
@@ -158,7 +158,7 @@ namespace PresentationObsSceneSwitcher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 137);
+            this.ClientSize = new System.Drawing.Size(317, 137);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);

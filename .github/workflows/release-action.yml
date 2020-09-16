@@ -1,5 +1,4 @@
 name: Release PresentationObsSceneSwitcher
-
 on:
   push:
     tags:

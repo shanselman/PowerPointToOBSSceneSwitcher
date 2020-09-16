@@ -27,6 +27,10 @@ jobs:
       with:
         dotnet-version: 3.1.101
 
+    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@2008f912f56e61277eefaac6d1888b750582aa16
+
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
       run: dotnet restore $env:ProjectPath
@@ -39,7 +43,7 @@ jobs:
       
     # Create the app package by building and packaging the Windows Application Packaging project
     - name: Publish
-      run: dotnet publish --configuration Release --no-restore $env:ProjectPath
+      run: msbuild $env:ProjectPath /p:Configuration=Release /p:OutputPath=${{ env.ProjectDirectory }}\bin\Release\netcoreapp3.1\publish
 
     # Publish
     - name: Upload build artifacts

@@ -42,7 +42,7 @@ namespace PowerPointToOBSSceneSwitcher
                         line = line.Substring(4).Trim();
                         Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
                         try { OBS.ChangeScene(line); }
-                        catch { Console.WriteLine($"  FAILED! Is there such a scene?"); }
+                        catch { Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); }
                         break;
                     }
                 }

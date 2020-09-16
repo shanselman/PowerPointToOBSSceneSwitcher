@@ -36,13 +36,9 @@ jobs:
       run: dotnet restore $env:ProjectPath
       env:
         Configuration: ${{ matrix.configuration }}
-
-    # Decode the base 64 encoded pfx and save the Signing_Certificate
-    - name: Build
-      run: dotnet build --configuration Release --no-restore $env:ProjectPath
       
     # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Publish
+    - name: Build and Publish
       run: msbuild $env:ProjectPath /p:Configuration=Release /p:OutputPath=${{ env.ProjectDirectory }}\bin\Release\netcoreapp3.1\publish
 
     # Publish

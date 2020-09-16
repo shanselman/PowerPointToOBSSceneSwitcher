@@ -18,28 +18,29 @@ namespace PresentationObsSceneSwitcher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // TODO: Maybe handle this with DI.
+            /* Read settings */
             JsonSettingsRepository settingsRepository = new JsonSettingsRepository();
-            ObsWebSocketClient connectedClient = await ConnectWithSavedSettings(settingsRepository).ConfigureAwait(false);
+            ObsWebSocketClientSettings settings = await settingsRepository.LoadAsync();
 
-            Application.Run(new ConfigurationForm(settingsRepository, connectedClient));
-        }
-
-        private static async Task<ObsWebSocketClient> ConnectWithSavedSettings(JsonSettingsRepository settingsRepository)
-        {
-            ObsWebSocketClientSettings savedSettings = await settingsRepository.LoadAsync();
-
-            if (!(savedSettings is null))
+            /* Init the OBS client */
+            using (ObsWebSocketClient client = new ObsWebSocketClient())
             {
-                ObsWebSocketClient connectedClient = new ObsWebSocketClient(savedSettings);
-                await connectedClient.ConnectAsync();
+                /* Try initial connection if there are saved settings */
+                if (!(settings is null)) await client.ConnectAsync(settings);
 
+                /* Suscribe the client. */
                 IPresentationSubscriber subscriber = new PowerPointPresentationSubscriber();
-                subscriber.Subscribe("OBS", async scene => connectedClient.ChangeScene(scene));
+                subscriber.Subscribe("OBS", async scene =>
+                {
+                    if (client.IsConnected)
+                        client.ChangeScene(scene);
+                });
 
-                return connectedClient;
+                Application.Run(new ConfigurationForm(settings, client));
             }
 
-            return null;
+            await settingsRepository.SaveAsync(settings);
         }
     }
 }

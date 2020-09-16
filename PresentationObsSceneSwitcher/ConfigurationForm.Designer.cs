@@ -32,6 +32,8 @@ namespace PresentationObsSceneSwitcher
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tbPassword = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.buttonStart = new System.Windows.Forms.Button();
             this.tbPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,8 +43,6 @@ namespace PresentationObsSceneSwitcher
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuItemClose = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.tbPassword = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +64,25 @@ namespace PresentationObsSceneSwitcher
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(329, 150);
             this.panel1.TabIndex = 0;
+            // 
+            // tbPassword
+            // 
+            this.tbPassword.Location = new System.Drawing.Point(93, 72);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
+            this.tbPassword.Name = "tbPassword";
+            this.tbPassword.Size = new System.Drawing.Size(224, 25);
+            this.tbPassword.TabIndex = 7;
+            this.tbPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 75);
+            this.label4.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 17);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Password:";
             // 
             // buttonStart
             // 
@@ -160,25 +179,6 @@ namespace PresentationObsSceneSwitcher
             this.notifyIcon.Text = "notifyIcon";
             this.notifyIcon.Visible = true;
             this.notifyIcon.DoubleClick += new System.EventHandler(this.notifyIcon_DoubleClick);
-            // 
-            // tbPassword
-            // 
-            this.tbPassword.Location = new System.Drawing.Point(93, 72);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(5, 10, 10, 0);
-            this.tbPassword.Name = "tbPassword";
-            this.tbPassword.Size = new System.Drawing.Size(224, 25);
-            this.tbPassword.TabIndex = 7;
-            this.tbPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 75);
-            this.label4.Margin = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(67, 17);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Password:";
             // 
             // ConfigurationForm
             // 

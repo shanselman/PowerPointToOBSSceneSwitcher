@@ -40,18 +40,17 @@ namespace PowerPointToOBSSceneSwitcher.Obs
     /// </summary>
     public class ObsWebSocketClient : IDisposable
     {
-        private readonly ObsWebSocketClientSettings settings;
-
         private bool disposedValue;
         private ObsWebSocket obsWebSocket;
+
+        public bool IsConnected => obsWebSocket.IsConnected;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="settings">Settings to connect</param>
-        public ObsWebSocketClient(ObsWebSocketClientSettings settings)
+        public ObsWebSocketClient()
         {
-            this.settings = settings;
             this.obsWebSocket = new ObsWebSocket(); // Always not null
         }
 
@@ -59,17 +58,19 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         /// Connects to the OBS WebSocket server
         /// </summary>
         /// <returns></returns>
-        public void Connect()
+        public void Connect(ObsWebSocketClientSettings settings)
         {
-            if (!obsWebSocket.IsConnected)
-                obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", settings.Password ?? "");
+            if (obsWebSocket.IsConnected)
+                obsWebSocket.Disconnect();
+
+            obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", settings.Password ?? "");
         }
 
         /// <summary>
         /// Connects to the OBS WebSocket server
         /// </summary>
         /// <returns></returns>
-        public async Task ConnectAsync()
+        public async Task ConnectAsync(ObsWebSocketClientSettings settings)
         {
             // At least this won't block the main thread if using from GUI
             if (!obsWebSocket.IsConnected)

@@ -49,9 +49,9 @@ namespace PowerPointToOBSSceneSwitcher
 
                         try 
                         { 
-                            sceneHandled = OBS.ChangeScene(sceneLine); 
+                            sceneHandled = OBS.ChangeScene(line); 
                         }
-                        catch 
+                        catch(Exception ex)
                         {
                              Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); 
                         }

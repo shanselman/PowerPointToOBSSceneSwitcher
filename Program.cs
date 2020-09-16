@@ -38,15 +38,23 @@ namespace PowerPointToOBSSceneSwitcher
 
                 bool sceneHandled = false;
 
-                var splitnotes = note.Split('\r');
 
-                foreach (var line in splitnotes)
+                var notereader = new StringReader(note);
+                string line;
+                while ((line = notereader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("OBS:"))
-                    {
-                        var sceneLine = line.Substring(4);
-                        Console.WriteLine($"  Switching to OBS Scene named \"{sceneLine}\"");
-                        sceneHandled = OBS.ChangeScene(sceneLine);
+                    if (line.StartsWith("OBS:")) {
+                        line = line.Substring(4).Trim();
+                        Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
+
+                        try 
+                        { 
+                            sceneHandled = OBS.ChangeScene(sceneLine); 
+                        }
+                        catch 
+                        {
+                             Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); 
+                        }
                     }
 
                     if(line.StartsWith("OBSDEF:"))
@@ -59,7 +67,6 @@ namespace PowerPointToOBSSceneSwitcher
                     {
                         OBS.ChangeScene(OBS.DefaultScene);
                         Console.WriteLine($"  Switching to OBS Default Scene named \"{OBS.DefaultScene}\"");
-
                     }
                 }
             }

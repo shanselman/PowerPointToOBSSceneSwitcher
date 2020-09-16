@@ -1,5 +1,4 @@
 ﻿using PowerPointToOBSSceneSwitcher.Obs;
-using PresentationObsSceneSwitcher.PowerPoint;
 using System;
 using System.Windows.Forms;
 
@@ -14,14 +13,15 @@ namespace PresentationObsSceneSwitcher
 
         #endregion
 
-        private readonly JsonSettingsRepository settingsRepository;
-        private ObsWebSocketClient connectedClient;
+        private readonly ObsWebSocketClientSettings settings;
+        private ObsWebSocketClient client;
 
         // TODO: Refactor this Injection
-        public ConfigurationForm(JsonSettingsRepository settingsRepository, ObsWebSocketClient connectedClient)
+        public ConfigurationForm(ObsWebSocketClientSettings settings, ObsWebSocketClient client)
         {
             InitializeComponent();
-            this.settingsRepository = settingsRepository;
+            this.settings = settings ?? new ObsWebSocketClientSettings();
+            this.client = client;
         }
 
         #region GUI Behavior events
@@ -54,8 +54,6 @@ namespace PresentationObsSceneSwitcher
                 e.Cancel = true;
                 this.Hide();
             }
-
-            connectedClient.Dispose();
         }
 
 
@@ -63,22 +61,12 @@ namespace PresentationObsSceneSwitcher
 
         private async void buttonStart_Click(object sender, EventArgs e)
         {
-            // TODO: Handle the parse better.
-            ObsWebSocketClientSettings settings = new ObsWebSocketClientSettings()
-            {
-                IpAddress = tbIpAddress.Text,
-                Port = int.Parse(tbPort.Text),
-                Password = tbPassword.Text
-            };
-            await settingsRepository.SaveAsync(settings);
+            // TODO: Handle the parse better when bindingsource support come.
+            settings.IpAddress = tbIpAddress.Text;
+            settings.Port = int.Parse(tbPort.Text);
+            settings.Password = tbPassword.Text;
 
-            connectedClient?.Dispose();
-            connectedClient = new ObsWebSocketClient(settings);
-            await connectedClient.ConnectAsync();
-
-            IPresentationSubscriber subscriber = new PowerPointPresentationSubscriber();
-
-            subscriber.Subscribe("OBS", async scene => connectedClient.ChangeScene(scene));
+            await client.ConnectAsync(settings);
         }
     }
 }

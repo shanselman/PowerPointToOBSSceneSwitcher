@@ -45,21 +45,28 @@ namespace PowerPointToOBSSceneSwitcher
                 {
                     if (line.StartsWith("OBS:")) {
                         line = line.Substring(4).Trim();
-                        Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
 
-                        try 
-                        { 
-                            sceneHandled = OBS.ChangeScene(line); 
-                        }
-                        catch(Exception ex)
+                        if (!sceneHandled)
                         {
-                             Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); 
+                            Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
+                            try
+                            {
+                                sceneHandled = OBS.ChangeScene(line);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"  ERROR: {ex.Message.ToString()}");
+                            }
+                        }
+                        else
+                        { 
+                            Console.WriteLine($"  WARNING: Multiple scene definitions found.  I used the first and have ignored \"{line}\"");
                         }
                     }
 
                     if(line.StartsWith("OBSDEF:"))
                     {
-                        OBS.DefaultScene = line.Substring(7);
+                        OBS.DefaultScene = line.Substring(7).Trim();
                         Console.WriteLine($"  Setting the default OBS Scene to \"{OBS.DefaultScene}\"");
                     }
 

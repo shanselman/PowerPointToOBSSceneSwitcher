@@ -40,12 +40,30 @@ namespace PowerPointToOBSSceneSwitcher
                 {
                     if (line.StartsWith("OBS:")) {
                         line = line.Substring(4).Trim();
-                        Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
-                        try { OBS.ChangeScene(line); }
-                        catch (Exception ex) { Console.WriteLine($"  ERROR: {ex.Message}"); }
-                        break;
+                        await HandleCommand(line);
                     }
                 }
+            }
+        }
+
+        static async Task HandleCommand(string command)
+        {
+            switch (command)
+            {
+                case "":
+                    break;
+                case "**START":
+                    OBS.StartRecording();
+                    break;
+                case "**STOP":
+                    OBS.StopRecording();
+                    break;
+
+                default:
+                    Console.WriteLine($"  Switching to OBS Scene named \"{command}\"");
+                    try { OBS.ChangeScene(command); }
+                    catch (Exception ex) { Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); }
+                    break;
             }
         }
     }

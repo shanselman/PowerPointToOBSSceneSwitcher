@@ -74,6 +74,7 @@ namespace PowerPointToOBSSceneSwitcher
                     {
                         OBS.ChangeScene(OBS.DefaultScene);
                         Console.WriteLine($"  Switching to OBS Default Scene named \"{OBS.DefaultScene}\"");
+
                     }
                 }
             }

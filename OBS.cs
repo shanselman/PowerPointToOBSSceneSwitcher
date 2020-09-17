@@ -35,7 +35,7 @@ namespace PowerPointToOBSSceneSwitcher
 		public bool StopRecording()
 		{
 			try { _OBS.Api.StopRecording(); }
-			catch {  /* Recording already started */ }
+			catch {  /* Recording already stopped */ }
 			return true;
 		}
 

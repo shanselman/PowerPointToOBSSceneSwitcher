@@ -25,6 +25,20 @@ namespace PowerPointToOBSSceneSwitcher
 			return true;
         }
 
+		public bool StartRecording()
+		{
+			try { _OBS.Api.StartRecording(); }
+			catch {  /* Recording already started */ }
+			return true;
+		}
+
+		public bool StopRecording()
+		{
+			try { _OBS.Api.StopRecording(); }
+			catch {  /* Recording already stopped */ }
+			return true;
+		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!_DisposedValue)

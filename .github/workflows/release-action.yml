@@ -52,7 +52,7 @@ jobs:
     - name: Zip
       run: |
           cd ${{ env.ProjectDirectory }}\publish
-          Compress-Archive -DestinationPath ${{ FileName }} -Path .\*
+          Compress-Archive -DestinationPath ${{ env.FileName }} -Path .\*
         
     - name: Create Release
       id: create_release

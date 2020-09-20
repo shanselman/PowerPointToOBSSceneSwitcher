@@ -13,14 +13,22 @@
     <PackageReference Include="OBS.WebSocket.NET" Version="4.7.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="PowerPointInterop">
-      <HintPath>..\..\PowerPointInterop\bin\Release\netstandard2.0\PowerPointInterop.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="lib\" />
-  </ItemGroup>
+  <!--Conditionally use Debug vs Release dll-->
+  <Choose>
+    <When Condition="'$(Configuration)' == 'Debug'">
+      <ItemGroup>
+        <Reference Include="PowerPointInterop">
+          <HintPath>.\lib\Debug\PowerPointInterop.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="PowerPointInterop">
+          <HintPath>.\lib\Release\PowerPointInterop.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 
 </Project>

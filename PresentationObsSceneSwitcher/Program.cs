@@ -1,8 +1,10 @@
+using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using PowerPointToOBSSceneSwitcher.Obs;
 using PresentationObsSceneSwitcher.PowerPoint;
 using System;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace PresentationObsSceneSwitcher
 {
@@ -11,36 +13,23 @@ namespace PresentationObsSceneSwitcher
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        [STAThread]
-        static async Task Main()
+        //[STAThread]
+        static async Task<int> Main(string[] args)
         {
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            ServiceProvider services = new ServiceCollection().AddLogging(builder => builder.AddConsole().AddDebug())
+                .AddScoped<IPresentationSubscriber, PowerPointPresentationSubscriber>()
+                .AddSingleton<ObsWebSocketClient>()
+                .AddScoped<JsonSettingsRepository>()
+                .AddScoped<Func<ObsWebSocketClientSettings, ConfigurationForm>>(ctx =>
+                    settings => new ConfigurationForm(settings, ctx.GetRequiredService<ObsWebSocketClient>()))
+                .BuildServiceProvider();
 
-            // TODO: Maybe handle this with DI.
-            /* Read settings */
-            JsonSettingsRepository settingsRepository = new JsonSettingsRepository();
-            ObsWebSocketClientSettings settings = await settingsRepository.LoadAsync();
+            CommandLineApplication<CommandLineApp> app = new CommandLineApplication<CommandLineApp>();
+            app.Conventions.UseDefaultConventions().UseConstructorInjection(services);
 
-            /* Init the OBS client */
-            using (ObsWebSocketClient client = new ObsWebSocketClient())
-            {
-                /* Try initial connection if there are saved settings */
-                if (!(settings is null)) await client.ConnectAsync(settings);
+            Console.WriteLine("Hi");
 
-                /* Suscribe the client. */
-                IPresentationSubscriber subscriber = new PowerPointPresentationSubscriber();
-                subscriber.Subscribe("OBS", async scene =>
-                {
-                    if (client.IsConnected)
-                        client.ChangeScene(scene);
-                });
-
-                Application.Run(new ConfigurationForm(settings, client));
-            }
-
-            await settingsRepository.SaveAsync(settings);
+            return await app.ExecuteAsync(args);
         }
     }
 }

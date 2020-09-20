@@ -1,6 +1,4 @@
-﻿using Microsoft.Office.Interop.PowerPoint;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace PresentationObsSceneSwitcher.PowerPoint
@@ -23,7 +21,7 @@ namespace PresentationObsSceneSwitcher.PowerPoint
         /// </summary>
         private static readonly Regex extractInfoFromNotesRegex = new Regex(@"\((?<AppName>[^\)]+)\):\[(?<Info>[^\]]+)\]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
-        private static Application powerPoint = new Application();
+        //private static Application powerPoint = new Application();
 
         private readonly Dictionary<string, PresentationSuscription> suscriptions = new Dictionary<string, PresentationSuscription>();
 
@@ -32,32 +30,19 @@ namespace PresentationObsSceneSwitcher.PowerPoint
         /// </summary>
         public PowerPointPresentationSubscriber()
         {
-            powerPoint.SlideShowNextSlide += async (SlideShowWindow Wn) =>
-            {
-                Console.WriteLine($"Moved to Slide Number {Wn.View.Slide.SlideNumber}");
+            PowerPointInterop.PowerPoint.SubscribeSlideShowNextSlide(async (string note) =>
+           {
+               foreach (Match match in extractInfoFromNotesRegex.Matches(note))
+               {
+                   string appName = match.Groups["AppName"].Value;
+                   string info = match.Groups["Info"].Value;
 
-                string note = String.Empty;
-                try
-                {
-                    // Text starts at Index 2 ¯\_(ツ)_/¯
-                    note = Wn.View.Slide.NotesPage.Shapes[2].TextFrame.TextRange.Text;
-                }
-                catch
-                {
-                    // No notes
-                }
-
-                foreach (Match match in extractInfoFromNotesRegex.Matches(note))
-                {
-                    string appName = match.Groups["AppName"].Value;
-                    string info = match.Groups["Info"].Value;
-
-                    if (suscriptions.TryGetValue(appName, out PresentationSuscription suscription))
-                    {
-                        await suscription(info).ConfigureAwait(false);
-                    }
-                }
-            };
+                   if (suscriptions.TryGetValue(appName, out PresentationSuscription suscription))
+                   {
+                       await suscription(info).ConfigureAwait(false);
+                   }
+               }
+           });
         }
 
         /// <summary>

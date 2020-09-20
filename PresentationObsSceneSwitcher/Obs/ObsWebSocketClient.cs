@@ -12,7 +12,7 @@ namespace PowerPointToOBSSceneSwitcher.Obs
     /// Configuring the ObsWebSocketClient with a Settings object allows to use it with DI
     public class ObsWebSocketClientSettings
     {
-        private string ipAddress;
+        private string ipAddress = "127.0.0.1";
 
         /// <summary>
         /// Ip address of the obs websocket server
@@ -27,12 +27,12 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         /// <summary>
         /// Port of the OBS WebSocket server
         /// </summary>
-        public int Port { get; set; }
+        public int Port { get; set; } = 4444;
 
         /// <summary>
         /// Optional Password of the OBS WebSocket server
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         {
             // At least this won't block the main thread if using from GUI
             if (!obsWebSocket.IsConnected)
-                await Task.Run(() => obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", ""));
+                await Task.WhenAny(Task.Run(() => obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", "")), Task.Delay(3000));
         }
 
         /// <summary>
@@ -85,6 +85,17 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         public bool ChangeScene(string scene)
         {
             obsWebSocket.Api.SetCurrentScene(scene);
+            return true;
+        }
+
+        /// <summary>
+        /// Changes OBS current scene
+        /// </summary>
+        /// <param name="scene">The Scene name in OBS</param>
+        /// <returns>Always true</returns>
+        public async Task<bool> ChangeSceneAsync(string scene)
+        {
+            await Task.Run(() => obsWebSocket.Api.SetCurrentScene(scene));
             return true;
         }
 

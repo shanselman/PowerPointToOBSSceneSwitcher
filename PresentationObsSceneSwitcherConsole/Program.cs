@@ -1,20 +1,17 @@
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PowerPointToOBSSceneSwitcher.Obs;
+using PresentationObsSceneSwitcher;
 using PresentationObsSceneSwitcher.PowerPoint;
 using System;
 using System.Threading.Tasks;
 
-namespace PresentationObsSceneSwitcher
+namespace PresentationObsSceneSwitcherConsole
 {
-    static class Program
+    internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        //[STAThread]
-        static async Task<int> Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
             ServiceProvider services = new ServiceCollection().AddLogging(builder => builder.AddConsole().AddDebug())
                 .AddScoped<IPresentationSubscriber, PowerPointPresentationSubscriber>()
@@ -26,8 +23,6 @@ namespace PresentationObsSceneSwitcher
 
             CommandLineApplication<CommandLineApp> app = new CommandLineApplication<CommandLineApp>();
             app.Conventions.UseDefaultConventions().UseConstructorInjection(services);
-
-            Console.WriteLine("Hi");
 
             return await app.ExecuteAsync(args);
         }

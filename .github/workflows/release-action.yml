@@ -1,4 +1,5 @@
 name: Release PresentationObsSceneSwitcher
+
 on:
   push:
     tags:
@@ -11,9 +12,10 @@ jobs:
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
-      Solution_Name: PowerPointToOBSSceneSwitcher                       # Replace with your solution name, i.e. MyWpfApp.sln.
-      ProjectDirectory: PresentationObsSceneSwitcher    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      ProjectPath: PresentationObsSceneSwitcher\PresentationObsSceneSwitcher.csproj                  # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
+      Solution_Name: PresentationObsSceneSwitcherConsole
+      ProjectDirectory: PresentationObsSceneSwitcherConsole
+      FileName: PresentationObsSceneSwitcher
+      ProjectPath: PresentationObsSceneSwitcherConsole\PresentationObsSceneSwitcherConsole.csproj
 
     steps:
     - name: Checkout
@@ -27,32 +29,30 @@ jobs:
       with:
         dotnet-version: 3.1.101
 
+    # Restore tools
+    - name: Restore tools
+      run: dotnet tool restore
+
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
       run: dotnet restore $env:ProjectPath
-      env:
-        Configuration: ${{ matrix.configuration }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Build
-      run: dotnet build --configuration Release --no-restore $env:ProjectPath
-      
-    # Create the app package by building and packaging the Windows Application Packaging project
-    - name: Publish
-      run: dotnet publish --configuration Release --no-restore $env:ProjectPath
+      run: dotnet warp $env:ProjectPath -o ${{ env.ProjectDirectory }}\publish
 
     # Publish
     - name: Upload build artifacts
       uses: actions/upload-artifact@v2
       with:
         name: Exe
-        path: ${{ env.ProjectDirectory }}\bin\Release\netcoreapp3.1\publish
+        path: ${{ env.ProjectDirectory }}\publish
       
     # Zip
     - name: Zip
       run: |
-          cd ${{ env.ProjectDirectory }}\bin\Release\netcoreapp3.1\publish
-          Compress-Archive -DestinationPath PresentationObsSceneSwitcher -Path .\*
+          cd ${{ env.ProjectDirectory }}\publish
+          Compress-Archive -DestinationPath ${{ FileName }} -Path .\*
         
     - name: Create Release
       id: create_release
@@ -72,6 +72,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ${{ env.ProjectDirectory }}\bin\Release\netcoreapp3.1\publish\PresentationObsSceneSwitcher.zip
+        asset_path: ${{ env.ProjectDirectory }}\publish\PresentationObsSceneSwitcher.zip
         asset_name: PresentationObsSceneSwitcher.zip
         asset_content_type: application/zip

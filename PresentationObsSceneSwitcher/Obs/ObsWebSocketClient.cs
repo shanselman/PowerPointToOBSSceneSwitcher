@@ -73,8 +73,7 @@ namespace PowerPointToOBSSceneSwitcher.Obs
         public async Task ConnectAsync(ObsWebSocketClientSettings settings)
         {
             // At least this won't block the main thread if using from GUI
-            if (!obsWebSocket.IsConnected)
-                await Task.WhenAny(Task.Run(() => obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", "")), Task.Delay(3000));
+            await Task.WhenAny(Task.Run(() => obsWebSocket.Connect($"ws://{settings.IpAddress}:{settings.Port}", "")), Task.Delay(3000));
         }
 
         /// <summary>

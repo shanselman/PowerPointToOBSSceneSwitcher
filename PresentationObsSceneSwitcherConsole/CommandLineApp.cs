@@ -1,12 +1,13 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
+using Microsoft.Extensions.Logging;
 using PowerPointToOBSSceneSwitcher.Obs;
+using PresentationObsSceneSwitcherConsole;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PresentationObsSceneSwitcher
 {
-    [Command]
     public class CommandLineApp
     {
         [Option(Description = "Run as console app", ShortName = "cmd")]
@@ -25,25 +26,40 @@ namespace PresentationObsSceneSwitcher
         private readonly JsonSettingsRepository settingsRepository;
         private readonly ObsWebSocketClient client;
         private readonly IPresentationSubscriber subscriber;
+        private readonly ILogger<CommandLineApp> logger;
 
         public CommandLineApp(Func<ObsWebSocketClientSettings, ConfigurationForm> formFactory,
             JsonSettingsRepository settingsRepository, ObsWebSocketClient client,
-            IPresentationSubscriber subscriber)
+            IPresentationSubscriber subscriber, ILogger<CommandLineApp> logger)
         {
             this.formFactory = formFactory;
             this.settingsRepository = settingsRepository;
             this.client = client;
             this.subscriber = subscriber;
+            this.logger = logger;
         }
 
         public async Task OnExecuteAsync()
         {
             ObsWebSocketClientSettings settings = await ReadSettings().ConfigureAwait(false);
-            await client.ConnectAsync(settings).ConfigureAwait(false);
+
+            logger.LogInformation("Try to connect using Address: {IpAddress}:{Port}", settings.IpAddress, settings.Port);
+
+            try
+            {
+                await client.ConnectAsync(settings).ConfigureAwait(false);
+                logger.LogInformation("Connected");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Cannot connect: {Message}", ex.Message);
+            }
 
             /* Suscribe the client. */
             subscriber.Subscribe("OBS", async command =>
             {
+                logger.LogTrace("Received command: {Command}", command);
+
                 if (command == "**START")
                     await client.StartRecordingAsync();
                 else if (command == "**STOP")
@@ -52,18 +68,26 @@ namespace PresentationObsSceneSwitcher
                     await client.ChangeSceneAsync(command);
             });
 
+
             if (!NoGui)
             {
+                logger.LogInformation("Runnig with GUI");
+                ConsoleWindowController.Hide();
                 RunGui(settings);
 
                 /* Save if running GUI. */
                 await settingsRepository.SaveAsync(settings);
             }
+            else
+            {
+                logger.LogInformation("Runnig without GUI");
+                Console.ReadKey();
+            }
         }
 
         private async Task<ObsWebSocketClientSettings> ReadSettings()
         {
-            ObsWebSocketClientSettings settings = (await settingsRepository.LoadAsync())
+            ObsWebSocketClientSettings settings = (await settingsRepository.LoadAsync().ConfigureAwait(false))
                             ?? new ObsWebSocketClientSettings();
 
             if (!string.IsNullOrEmpty(IpAddress))

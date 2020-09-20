@@ -39,7 +39,7 @@ jobs:
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     - name: Build
-      run: dotnet warp $env:ProjectPath -o ${{ env.ProjectDirectory }}\publish
+      run: dotnet warp $env:ProjectPath -o ${{ env.ProjectDirectory }}\publish\${{ env.FileName }}.exe
 
     # Publish
     - name: Upload build artifacts

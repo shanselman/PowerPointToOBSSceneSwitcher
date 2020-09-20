@@ -99,6 +99,46 @@ namespace PowerPointToOBSSceneSwitcher.Obs
             return true;
         }
 
+        /// <summary>
+        /// Starts recording OBS
+        /// </summary>
+        /// <returns>Always true</returns>
+        public bool StartRecording()
+        {
+            obsWebSocket.Api.StartRecording();
+            return true;
+        }
+
+        /// <summary>
+        /// Starts recording OBS
+        /// </summary>
+        /// <returns>Always true</returns>
+        public async Task<bool> StartRecordingAsync()
+        {
+            await Task.Run(() => obsWebSocket.Api.StartRecording());
+            return true;
+        }
+
+        /// <summary>
+        /// Starts recording OBS
+        /// </summary>
+        /// <returns>Always true</returns>
+        public bool StopRecording()
+        {
+            obsWebSocket.Api.StopRecording();
+            return true;
+        }
+
+        /// <summary>
+        /// Starts recording OBS
+        /// </summary>
+        /// <returns>Always true</returns>
+        public async Task<bool> StopRecordingAsync()
+        {
+            await Task.Run(() => obsWebSocket.Api.StopRecording());
+            return true;
+        }
+
         #region Dispose
 
         ~ObsWebSocketClient() => Dispose(disposing: false);

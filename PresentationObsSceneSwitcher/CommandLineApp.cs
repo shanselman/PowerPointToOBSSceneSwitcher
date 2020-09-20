@@ -42,9 +42,14 @@ namespace PresentationObsSceneSwitcher
             await client.ConnectAsync(settings).ConfigureAwait(false);
 
             /* Suscribe the client. */
-            subscriber.Subscribe("OBS", async scene =>
+            subscriber.Subscribe("OBS", async command =>
             {
-                if (client.IsConnected) await client.ChangeSceneAsync(scene);
+                if (command == "**START")
+                    await client.StartRecordingAsync();
+                else if (command == "**STOP")
+                    await client.StopRecordingAsync();
+                else if (string.IsNullOrEmpty(command))
+                    await client.ChangeSceneAsync(command);
             });
 
             if (!NoGui)

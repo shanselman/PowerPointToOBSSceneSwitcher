@@ -7,10 +7,13 @@
 
   <ItemGroup>
     <Compile Remove="PowerPointInterop\**" />
+    <Compile Remove="PresentationObsSceneSwitcherConsole\**" />
     <Compile Remove="PresentationObsSceneSwitcher\**" />
     <EmbeddedResource Remove="PowerPointInterop\**" />
+    <EmbeddedResource Remove="PresentationObsSceneSwitcherConsole\**" />
     <EmbeddedResource Remove="PresentationObsSceneSwitcher\**" />
     <None Remove="PowerPointInterop\**" />
+    <None Remove="PresentationObsSceneSwitcherConsole\**" />
     <None Remove="PresentationObsSceneSwitcher\**" />
   </ItemGroup>
 

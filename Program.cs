@@ -26,6 +26,7 @@ namespace PowerPointToOBSSceneSwitcher
             Console.ReadLine();
         }
 
+
         async static void App_SlideShowNextSlide(SlideShowWindow Wn)
         {
             if (Wn != null)
@@ -43,7 +44,8 @@ namespace PowerPointToOBSSceneSwitcher
                 string line;
                 while ((line = notereader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("OBS:")) {
+                    if (line.StartsWith("OBS:"))
+                    {
                         line = line.Substring(4).Trim();
 
                         if (!sceneHandled)
@@ -59,15 +61,25 @@ namespace PowerPointToOBSSceneSwitcher
                             }
                         }
                         else
-                        { 
+                        {
                             Console.WriteLine($"  WARNING: Multiple scene definitions found.  I used the first and have ignored \"{line}\"");
                         }
                     }
 
-                    if(line.StartsWith("OBSDEF:"))
+                    if (line.StartsWith("OBSDEF:"))
                     {
                         OBS.DefaultScene = line.Substring(7).Trim();
                         Console.WriteLine($"  Setting the default OBS Scene to \"{OBS.DefaultScene}\"");
+                    }
+
+                    if (line.StartsWith("**START"))
+                    {
+                        OBS.StartRecording();
+                    }
+
+                    if (line.StartsWith("**STOP"))
+                    {
+                        OBS.StopRecording();
                     }
 
                     if (!sceneHandled)
@@ -78,5 +90,6 @@ namespace PowerPointToOBSSceneSwitcher
                 }
             }
         }
+
     }
 }

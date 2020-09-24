@@ -6,3 +6,14 @@ Note this won't build with "dotnet build," instead open a Visual Studio 2019 Dev
 This video explains how it works!
 
 [![Watch the video](https://i.imgur.com/v369AtP.png)](https://www.youtube.com/watch?v=ciNcxi2bPwM)
+
+## Usage
+* Set a scene for a slide with 
+```<language>
+    OBS:{Scene name as it appears in OBS}
+```
+
+* Set a default scene (used when a scene is not defined) with
+```<language>
+    OBSDEF:{Scene name as it appears in OBS}
+```

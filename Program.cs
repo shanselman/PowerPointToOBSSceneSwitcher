@@ -21,8 +21,11 @@ namespace PowerPointToOBSSceneSwitcher
             await OBS.Connect();
             Console.WriteLine("connected");
 
+            OBS.GetScenes();
+
             Console.ReadLine();
         }
+
 
         async static void App_SlideShowNextSlide(SlideShowWindow Wn)
         {
@@ -34,37 +37,59 @@ namespace PowerPointToOBSSceneSwitcher
                 try { note = Wn.View.Slide.NotesPage.Shapes[2].TextFrame.TextRange.Text; }
                 catch { /*no notes*/ }
 
+                bool sceneHandled = false;
+
+
                 var notereader = new StringReader(note);
                 string line;
                 while ((line = notereader.ReadLine()) != null)
                 {
-                    if (line.StartsWith("OBS:")) {
+                    if (line.StartsWith("OBS:"))
+                    {
                         line = line.Substring(4).Trim();
-                        await HandleCommand(line);
+
+                        if (!sceneHandled)
+                        {
+                            Console.WriteLine($"  Switching to OBS Scene named \"{line}\"");
+                            try
+                            {
+                                sceneHandled = OBS.ChangeScene(line);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine($"  ERROR: {ex.Message.ToString()}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"  WARNING: Multiple scene definitions found.  I used the first and have ignored \"{line}\"");
+                        }
+                    }
+
+                    if (line.StartsWith("OBSDEF:"))
+                    {
+                        OBS.DefaultScene = line.Substring(7).Trim();
+                        Console.WriteLine($"  Setting the default OBS Scene to \"{OBS.DefaultScene}\"");
+                    }
+
+                    if (line.StartsWith("**START"))
+                    {
+                        OBS.StartRecording();
+                    }
+
+                    if (line.StartsWith("**STOP"))
+                    {
+                        OBS.StopRecording();
+                    }
+
+                    if (!sceneHandled)
+                    {
+                        OBS.ChangeScene(OBS.DefaultScene);
+                        Console.WriteLine($"  Switching to OBS Default Scene named \"{OBS.DefaultScene}\"");
                     }
                 }
             }
         }
 
-        static async Task HandleCommand(string command)
-        {
-            switch (command)
-            {
-                case "":
-                    break;
-                case "**START":
-                    OBS.StartRecording();
-                    break;
-                case "**STOP":
-                    OBS.StopRecording();
-                    break;
-
-                default:
-                    Console.WriteLine($"  Switching to OBS Scene named \"{command}\"");
-                    try { OBS.ChangeScene(command); }
-                    catch (Exception ex) { Console.WriteLine($"  ERROR: {ex.Message.ToString()}"); }
-                    break;
-            }
-        }
     }
 }

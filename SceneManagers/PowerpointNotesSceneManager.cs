@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PowerPointToOBSSceneSwitcher.SceneProcessors
+namespace PowerPointToOBSSceneSwitcher.SceneManagers
 {
-    class PowerpointNoteProcessor : ISceneDataProcessor
+    class PowerpointNotesSceneManager : ISceneManager
     {
         private readonly IOBSManager _obs;
 
-        public PowerpointNoteProcessor(IOBSManager obs)
+        public PowerpointNotesSceneManager(IOBSManager obs)
         {
             _obs = obs;
         }

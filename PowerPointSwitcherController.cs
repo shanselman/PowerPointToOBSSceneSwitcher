@@ -25,8 +25,8 @@ namespace PowerPointToOBSSceneSwitcher
 
             Console.Write("Connecting to OBS...");
             await _obsManager.Connect();
-            _obsManager.Init();
             Console.WriteLine("connected");
+            _obsManager.Init();
         }
 
         private void App_SlideShowNextSlide(SlideShowWindow Wn)

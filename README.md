@@ -28,4 +28,24 @@ Example:
 OBSDEF:DefaultScene
 ```
 
+UPDATE: For many this just clones and builds, but for some folks (unknown why) it doesn't.
 
+Here are some instructions that worked for community member Harold Dickerman. I haven't tested these instructions:
+
+1. Here are the build instructions for PowerPointToOBSSceneSwitcher:
+https://visualstudio.microsoft.com/thank-you-downloading-visual-studio-exp/?sku=Community&rel=16
+
+    - .NET Development (Core only, No Optional requirements)
+    - Individual Components: C# and Visual Basic Roslyn compiler, MSBUILD
+
+2. Ensure NuGet.org is listed in Visual Studio as a package source, per fix: https://stackoverflow.com/questions/52376567/how-to-resolve-unable-to-find-package-nuget-error 
+
+3. Download and install: https://dotnet.microsoft.com/download/dotnet/thank-you/runtime-3.1.14-windows-x64-installer
+
+4. Download and install: https://github.com/Palakis/obs-websocket/releases/download/4.9.0/obs-websocket-4.9.0-Windows-Installer.exe
+
+5. Download and unzip https://github.com/shanselman/PowerPointToOBSSceneSwitcher/archive/refs/heads/main.zip
+
+6. Double click on PowerPointToOBSSceneSwitcher.sln should open Visual Studio
+
+7. Select Build > Build PowerPointToOBSSceneSwitcher.sln

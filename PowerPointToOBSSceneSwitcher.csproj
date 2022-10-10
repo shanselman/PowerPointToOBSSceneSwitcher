@@ -4,7 +4,23 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-  
+
+  <ItemGroup>
+    <Compile Remove="PowerPointInterop\**" />
+    <Compile Remove="PresentationObsSceneSwitcherConsole\**" />
+    <Compile Remove="PresentationObsSceneSwitcher\**" />
+    <EmbeddedResource Remove="PowerPointInterop\**" />
+    <EmbeddedResource Remove="PresentationObsSceneSwitcherConsole\**" />
+    <EmbeddedResource Remove="PresentationObsSceneSwitcher\**" />
+    <None Remove="PowerPointInterop\**" />
+    <None Remove="PresentationObsSceneSwitcherConsole\**" />
+    <None Remove="PresentationObsSceneSwitcher\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OBS.WebSocket.NET" Version="4.7.2" />
+  </ItemGroup>
+
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.PowerPoint">
       <Guid>{91493440-5a91-11cf-8700-00aa0060263b}</Guid>
@@ -15,10 +31,6 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="OBS.WebSocket.NET" Version="4.7.2" />
   </ItemGroup>
 
 </Project>
